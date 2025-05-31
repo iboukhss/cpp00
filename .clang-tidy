@@ -1,42 +1,65 @@
-Checks: "readability-identifier-naming, bugprone-*, cppcoreguidelines-*"
+Checks: "readability-identifier-naming"
 CheckOptions:
-  # Prefixes
-  - key: readability-identifier-naming.ConstantPrefix
-    value: k_
-
-  - key: readability-identifier-naming.GlobalPrefix
-    value: g_
-
-  - key: readability-identifier-naming.MemberPrefix
-    value: m_
-
-  - key: readability-identifier-naming.StaticPrefix
-    value: s_
-
-  # Casing
-  - key: readability-identifier-naming.ClassCase
-    value: CamelCase
-
-  - key: readability-identifier-naming.EnumCase
-    value: CamelCase
-
+  # Functions
   - key: readability-identifier-naming.FunctionCase
     value: CamelCase
 
-  - key: readability-identifier-naming.MacroCase
-    value: UPPER_CASE
+  # Variables
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
 
+  # Parameters
+  - key: readability-identifier-naming.ParameterCase
+    value: camelBack
+
+  # Constant variables
+  - key: readability-identifier-naming.ConstantPrefix
+    value: k_
+  - key: readability-identifier-naming.ConstantCase
+    value: CamelCase
+
+  # Global variables
+  - key: readability-identifier-naming.GlobalVariablePrefix
+    value: g_
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: CamelCase
+
+  # Member variables
+  - key: readability-identifier-naming.MemberPrefix
+    value: m_
+  - key: readability-identifier-naming.MemberCase
+    value: CamelCase
+
+  # Static variables
+  - key: readability-identifier-naming.StaticVariablePrefix
+    value: s_
+  - key: readability-identifier-naming.StaticVariableCase
+    value: CamelCase
+
+  # Classes
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+
+  # Enums
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  # Structs
   - key: readability-identifier-naming.StructCase
     value: CamelCase
 
+  # Type aliases
   - key: readability-identifier-naming.TypeAliasCase
     value: CamelCase
 
+  # Typedefs
   - key: readability-identifier-naming.TypedefCase
     value: CamelCase
 
+  # Unions
   - key: readability-identifier-naming.UnionCase
     value: CamelCase
 
-  - key: readability-identifier-naming.VariableCase
-    value: lower_case
+  # Macros
+  - key: readability-identifier-naming.MacroCase
+    value: UPPER_CASE

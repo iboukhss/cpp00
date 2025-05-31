@@ -1,53 +1,53 @@
 #include "Contact.hpp"
 
-// Setters
-void Contact::SetFirstName(const std::string& first_name)
+// Getters
+std::string Contact::GetFirstName() const
 {
-    m_first_name = first_name;
+    return m_FirstName;
 }
 
-void Contact::SetLastName(const std::string& last_name)
+std::string Contact::GetLastName() const
 {
-    m_last_name = last_name;
+    return m_LastName;
+}
+
+std::string Contact::GetNickname() const
+{
+    return m_Nickname;
+}
+
+std::string Contact::GetPhoneNumber() const
+{
+    return m_PhoneNumber;
+}
+
+std::string Contact::GetDarkestSecret() const
+{
+    return m_DarkestSecret;
+}
+
+// Setters
+void Contact::SetFirstName(const std::string& firstName)
+{
+    m_FirstName = firstName;
+}
+
+void Contact::SetLastName(const std::string& lastName)
+{
+    m_LastName = lastName;
 }
 
 void Contact::SetNickname(const std::string& nickname)
 {
-    m_nickname = nickname;
+    m_Nickname = nickname;
 }
 
-void Contact::SetPhoneNumber(const std::string& phone_number)
+void Contact::SetPhoneNumber(const std::string& phoneNumber)
 {
-    m_phone_number = phone_number;
+    m_PhoneNumber = phoneNumber;
 }
 
-void Contact::SetDarkestSecret(const std::string& darkest_secret)
+void Contact::SetDarkestSecret(const std::string& darkestSecret)
 {
-    m_darkest_secret = darkest_secret;
-}
-
-// Getters
-std::string Contact::FirstName() const
-{
-    return m_first_name;
-}
-
-std::string Contact::LastName() const
-{
-    return m_last_name;
-}
-
-std::string Contact::Nickname() const
-{
-    return m_nickname;
-}
-
-std::string Contact::PhoneNumber() const
-{
-    return m_phone_number;
-}
-
-std::string Contact::DarkestSecret() const
-{
-    return m_darkest_secret;
+    m_DarkestSecret = darkestSecret;
 }

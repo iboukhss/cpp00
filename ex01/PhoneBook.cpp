@@ -1,29 +1,31 @@
 #include "PhoneBook.hpp"
 
-PhoneBook::PhoneBook() : m_size(0), m_next_index(0)
+#include <stdexcept>
+
+PhoneBook::PhoneBook() : m_Size(0), m_NextIndex(0)
 {
 }
 
 void PhoneBook::AddContact(const Contact& contact)
 {
-    m_contacts[m_next_index] = contact;
-    m_next_index = (m_next_index + 1) % k_max_contacts;
-    if (m_size < k_max_contacts)
+    m_Contacts[m_NextIndex] = contact;
+    m_NextIndex = (m_NextIndex + 1) % k_MaxContacts;
+    if (m_Size < k_MaxContacts)
     {
-        m_size++;
+        m_Size++;
     }
 }
 
-const Contact* PhoneBook::GetContactAtIndex(int index) const
+const Contact& PhoneBook::GetContactAtIndex(int index) const
 {
-    if (index < 0 || index >= m_size)
+    if (index < 0 || index >= m_Size)
     {
-        return NULL;
+        throw std::out_of_range("Index out of range");
     }
-    return &m_contacts[index];
+    return m_Contacts[index];
 }
 
-int PhoneBook::Size() const
+int PhoneBook::GetSize() const
 {
-    return m_size;
+    return m_Size;
 }

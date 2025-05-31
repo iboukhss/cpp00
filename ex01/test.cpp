@@ -1,6 +1,10 @@
 #include "PhoneBook.hpp"
 
 #include <cctype>
+#include <cerrno>
+#include <climits>
+#include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <string>
 
@@ -34,17 +38,14 @@ static void TrimBoth(std::string& str)
 
 static void ReadLine(const std::string& prompt, std::string& str)
 {
-    while (true)
+    do
     {
         std::cout << prompt;
         std::getline(std::cin, str);
 
         TrimBoth(str);
-        if (!str.empty())
-        {
-            break;
-        }
     }
+    while (str.empty());
 }
 
 static void SaveContactInfo(PhoneBook& phonebook)
@@ -70,6 +71,65 @@ static void SaveContactInfo(PhoneBook& phonebook)
     phonebook.AddContact(contact);
 }
 
+int ParseInt(const std::string& str)
+{
+    const char* nptr = str.c_str();
+    char* endptr = NULL;
+    errno = 0;
+
+    long val = std::strtol(nptr, &endptr, 10);
+
+    if (nptr == endptr)
+    {
+        throw std::invalid_argument("Invalid string: '" + str + "'");
+    }
+    if (errno == ERANGE || val > INT_MAX || val < INT_MIN)
+    {
+        throw std::out_of_range("Value out of range: '" + str + "'");
+    }
+    while (*endptr != '\0' && std::isspace(static_cast<unsigned char>(*endptr)))
+    {
+        ++endptr;
+    }
+    if (*endptr != '\0')
+    {
+        throw std::invalid_argument("Invalid trailing characters: '" + str + "'");
+    }
+    return static_cast<int>(val);
+}
+
+static void DisplayContactInfo(const PhoneBook& phonebook)
+{
+    if (phonebook.GetSize() == 0)
+    {
+        std::cout << "Phonebook is empty. Add new contacts.\n";
+        return;
+    }
+
+    while (true)
+    {
+        std::string input;
+
+        ReadLine("Enter index to display: ", input);
+        try
+        {
+            int index = ParseInt(input);
+            const Contact& contact = phonebook.GetContactAtIndex(index);
+
+            std::cout << "First name: " << contact.GetFirstName() << '\n';
+            std::cout << "Last name: " << contact.GetLastName() << '\n';
+            std::cout << "Nickname: " << contact.GetPhoneNumber() << '\n';
+            std::cout << "Phone number: " << contact.GetPhoneNumber() << '\n';
+            std::cout << "Darkest secret: " << contact.GetDarkestSecret() << '\n';
+            break;
+        }
+        catch (const std::exception& e)
+        {
+            std::cout << e.what() << '\n';
+        }
+    }
+}
+
 int main(void)
 {
     std::cin.exceptions(std::istream::eofbit);
@@ -77,19 +137,19 @@ int main(void)
     try
     {
         PhoneBook phonebook;
-        std::string command;
 
         while (true)
         {
-            ReadLine("\nEnter command (ADD, SELECT, EXIT): ", command);
+            std::string command;
 
+            ReadLine("\nEnter command (ADD, SELECT, EXIT): ", command);
             if (command == "ADD")
             {
                 SaveContactInfo(phonebook);
             }
             else if (command == "SELECT")
             {
-                continue;
+                DisplayContactInfo(phonebook);
             }
             else if (command == "EXIT")
             {
@@ -101,7 +161,7 @@ int main(void)
             }
         }
     }
-    catch (const std::ios_base::failure& e)
+    catch (const std::ios_base::failure&)
     {
         std::cout << std::endl;
     }

@@ -8,16 +8,17 @@ class PhoneBook
   public:
     PhoneBook();
 
-    int Size() const;
-    const Contact* GetContactAtIndex(int index) const;
+    int GetSize() const;
+    const Contact& GetContactAtIndex(int index) const;
 
     void AddContact(const Contact& contact);
 
   private:
-    static const int k_max_contacts = 8;
-    Contact m_contacts[k_max_contacts];
-    int m_size;
-    int m_next_index;
+    static const int k_MaxContacts = 8;
+
+    Contact m_Contacts[k_MaxContacts];
+    int m_Size;
+    int m_NextIndex;
 };
 
 #endif // PHONEBOOK_HPP

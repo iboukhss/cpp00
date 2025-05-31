@@ -6,24 +6,24 @@
 class Contact
 {
   public:
-    void set_first_name(const std::string &first_name);
-    void set_last_name(const std::string &last_name);
-    void set_nickname(const std::string &nickname);
-    void set_phone_number(const std::string &phone_number);
-    void set_darkest_secret(const std::string &darkest_secret);
+    std::string FirstName() const;
+    std::string LastName() const;
+    std::string Nickname() const;
+    std::string PhoneNumber() const;
+    std::string DarkestSecret() const;
 
-    std::string first_name() const;
-    std::string last_name() const;
-    std::string nickname() const;
-    std::string phone_number() const;
-    std::string darkest_secret() const;
+    void SetFirstName(const std::string& first_name);
+    void SetLastName(const std::string& last_name);
+    void SetNickname(const std::string& nickname);
+    void SetPhoneNumber(const std::string& phone_number);
+    void SetDarkestSecret(const std::string& darkest_secret);
 
   private:
-    std::string first_name_;
-    std::string last_name_;
-    std::string nickname_;
-    std::string phone_number_;
-    std::string darkest_secret_;
+    std::string m_first_name;
+    std::string m_last_name;
+    std::string m_nickname;
+    std::string m_phone_number;
+    std::string m_darkest_secret;
 };
 
 #endif // CONTACT_HPP

@@ -1,0 +1,42 @@
+Checks: "readability-identifier-naming, bugprone-*, cppcoreguidelines-*"
+CheckOptions:
+  # Prefixes
+  - key: readability-identifier-naming.ConstantPrefix
+    value: k_
+
+  - key: readability-identifier-naming.GlobalPrefix
+    value: g_
+
+  - key: readability-identifier-naming.MemberPrefix
+    value: m_
+
+  - key: readability-identifier-naming.StaticPrefix
+    value: s_
+
+  # Casing
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.FunctionCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.MacroCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.TypeAliasCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.UnionCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case

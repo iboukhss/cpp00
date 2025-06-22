@@ -1,65 +1,21 @@
-Checks: "readability-identifier-naming"
+---
+Checks: >-
+  -*,
+  readability-identifier-naming
+
 CheckOptions:
-  # Functions
-  - key: readability-identifier-naming.FunctionCase
-    value: CamelCase
-
-  # Variables
-  - key: readability-identifier-naming.VariableCase
-    value: camelBack
-
-  # Parameters
-  - key: readability-identifier-naming.ParameterCase
-    value: camelBack
-
-  # Constant variables
-  - key: readability-identifier-naming.ConstantPrefix
-    value: k_
-  - key: readability-identifier-naming.ConstantCase
-    value: CamelCase
-
-  # Global variables
-  - key: readability-identifier-naming.GlobalVariablePrefix
-    value: g_
-  - key: readability-identifier-naming.GlobalVariableCase
-    value: CamelCase
-
-  # Member variables
-  - key: readability-identifier-naming.MemberPrefix
-    value: m_
-  - key: readability-identifier-naming.MemberCase
-    value: CamelCase
-
-  # Static variables
-  - key: readability-identifier-naming.StaticVariablePrefix
-    value: s_
-  - key: readability-identifier-naming.StaticVariableCase
-    value: CamelCase
-
-  # Classes
   - key: readability-identifier-naming.ClassCase
     value: CamelCase
-
-  # Enums
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
   - key: readability-identifier-naming.EnumCase
     value: CamelCase
 
-  # Structs
-  - key: readability-identifier-naming.StructCase
-    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
 
-  # Type aliases
-  - key: readability-identifier-naming.TypeAliasCase
-    value: CamelCase
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack
 
-  # Typedefs
-  - key: readability-identifier-naming.TypedefCase
-    value: CamelCase
-
-  # Unions
-  - key: readability-identifier-naming.UnionCase
-    value: CamelCase
-
-  # Macros
   - key: readability-identifier-naming.MacroCase
     value: UPPER_CASE

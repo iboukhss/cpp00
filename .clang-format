@@ -3,10 +3,15 @@ BasedOnStyle: LLVM
 UseTab: Never
 IndentWidth: 4
 ColumnLimit: 100
-BreakBeforeBraces: Stroustrup
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeWhile: true
 PointerAlignment: Left
 IndentAccessModifiers: false
 AccessModifierOffset: -4
 AllowShortFunctionsOnASingleLine: InlineOnly
-BreakConstructorInitializers: AfterColon
+BreakConstructorInitializers: BeforeColon
 PackConstructorInitializers: Never

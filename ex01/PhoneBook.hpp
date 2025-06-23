@@ -3,22 +3,24 @@
 
 #include "Contact.hpp"
 
-class PhoneBook
-{
-  public:
+class PhoneBook {
+public:
     PhoneBook();
 
-    int GetSize() const;
-    const Contact& GetContactAtIndex(int index) const;
+    void addContact(const Contact& contact);
 
-    void AddContact(const Contact& contact);
+    int getSize() const;
+    bool isEmpty() const;
+    bool isFull() const;
+    const Contact* getContactAt(int index) const;
 
-  private:
-    static const int k_MaxContacts = 8;
+private:
+    static const int kMaxContacts = 8;
+    Contact contacts[kMaxContacts];
+    int size;
+    int nextIndex;
 
-    Contact m_Contacts[k_MaxContacts];
-    int m_Size;
-    int m_NextIndex;
+    void checkInvariants() const;
 };
 
 #endif // PHONEBOOK_HPP

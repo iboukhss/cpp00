@@ -1,31 +1,54 @@
 #include "PhoneBook.hpp"
 
+#include <cassert>
 #include <stdexcept>
 
-PhoneBook::PhoneBook() : m_Size(0), m_NextIndex(0)
+// Constructors
+PhoneBook::PhoneBook()
+    : size(0),
+      nextIndex(0)
 {
 }
 
-void PhoneBook::AddContact(const Contact& contact)
+void PhoneBook::checkInvariants() const
 {
-    m_Contacts[m_NextIndex] = contact;
-    m_NextIndex = (m_NextIndex + 1) % k_MaxContacts;
-    if (m_Size < k_MaxContacts)
-    {
-        m_Size++;
+    assert(kMaxContacts > 0);
+    assert(size >= 0 && size <= kMaxContacts);
+    assert(nextIndex >= 0 && nextIndex < kMaxContacts);
+}
+
+// Getters
+int PhoneBook::getSize() const
+{
+    return size;
+}
+
+bool PhoneBook::isEmpty() const
+{
+    return (size == 0);
+}
+
+bool PhoneBook::isFull() const
+{
+    return (size == kMaxContacts);
+}
+
+const Contact* PhoneBook::getContactAt(int index) const
+{
+    if (size == 0 || (index < 0 || index >= size)) {
+        return (NULL);
     }
+    return &contacts[index];
 }
 
-const Contact& PhoneBook::GetContactAtIndex(int index) const
+// Setters
+void PhoneBook::addContact(const Contact& contact)
 {
-    if (index < 0 || index >= m_Size)
-    {
-        throw std::out_of_range("Index out of range");
+    this->checkInvariants();
+
+    contacts[nextIndex] = contact;
+    nextIndex = (nextIndex + 1) % kMaxContacts;
+    if (size < kMaxContacts) {
+        ++size;
     }
-    return m_Contacts[index];
-}
-
-int PhoneBook::GetSize() const
-{
-    return m_Size;
 }

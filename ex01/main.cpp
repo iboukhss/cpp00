@@ -4,7 +4,6 @@
 #include <cerrno>
 #include <climits>
 #include <cstdlib>
-#include <exception>
 #include <iomanip>
 #include <ios>
 #include <iostream>
@@ -46,7 +45,7 @@ static void readLine(const std::string& prompt, std::string& str)
     while (str.empty());
 }
 
-static void saveContactInfo(PhoneBook& phonebook)
+static void saveContactInfo(PhoneBook& pb)
 {
     Contact contact;
     std::string input;
@@ -66,30 +65,32 @@ static void saveContactInfo(PhoneBook& phonebook)
     readLine("Darkest secret: ", input);
     contact.setDarkestSecret(input);
 
-    phonebook.addContact(contact);
+    pb.addContact(contact);
 }
 
-static int parseInt(const std::string& str)
+static bool tryParseInt(const std::string& str, int& out)
 {
     const char* nptr = str.c_str();
     char* endptr = NULL;
     errno = 0;
 
     long val = std::strtol(nptr, &endptr, 10);
-
     if (nptr == endptr) {
-        throw std::invalid_argument("Invalid string: '" + str + "'");
+        return false;
     }
     if (errno == ERANGE || val > INT_MAX || val < INT_MIN) {
-        throw std::out_of_range("Value out of range: '" + str + "'");
+        return false;
     }
+
     while (*endptr != '\0' && std::isspace(static_cast<unsigned char>(*endptr))) {
         ++endptr;
     }
     if (*endptr != '\0') {
-        throw std::invalid_argument("Invalid trailing characters: '" + str + "'");
+        return false;
     }
-    return static_cast<int>(val);
+
+    out = static_cast<int>(val);
+    return true;
 }
 
 static const int kNumColumns = 4;
@@ -140,36 +141,48 @@ static void drawRowData(const Contact& contact, int index)
     std::cout << "|\n";
 }
 
-static void displayContactList(const PhoneBook& phonebook)
+static void displayContactList(const PhoneBook& pb)
 {
     drawTableHeader();
-    for (int i = 0; i < phonebook.getSize(); ++i) {
-        const Contact* contact = phonebook.getContactAt(i);
-        drawRowData(*contact, i);
+    for (int i = 0; i < pb.getSize(); ++i) {
+        const Contact& contact = pb.getContactAt(i);
+        drawRowData(contact, i);
     }
     drawRowBorder();
 }
 
-static void displayContactInfo(const PhoneBook& phonebook)
+static void displayContactInfo(const PhoneBook& pb)
 {
-    if (phonebook.isEmpty()) {
+    if (pb.isEmpty()) {
         std::cout << "Phonebook is empty. Add new contacts first.\n";
         return;
     }
 
-    displayContactList(phonebook);
+    displayContactList(pb);
 
     std::string input;
+    int index;
 
-    readLine("Enter index to display: ", input);
-    int index = parseInt(input);
-    const Contact* contact = phonebook.getContactAt(index);
+    while (true) {
+        readLine("Enter index to display: ", input);
+        if (!tryParseInt(input, index)) {
+            std::cout << "Invalid number. Try again.\n";
+            continue;
+        }
+        if (!pb.hasContactAt(index)) {
+            std::cout << "Invalid index. Try again.\n";
+            continue;
+        }
+        break;
+    }
 
-    std::cout << "First name: " << contact->getFirstName() << '\n';
-    std::cout << "Last name: " << contact->getLastName() << '\n';
-    std::cout << "Nickname: " << contact->getNickname() << '\n';
-    std::cout << "Phone number: " << contact->getPhoneNumber() << '\n';
-    std::cout << "Darkest secret: " << contact->getDarkestSecret() << '\n';
+    const Contact& contact = pb.getContactAt(index);
+
+    std::cout << "First name: " << contact.getFirstName() << '\n';
+    std::cout << "Last name: " << contact.getLastName() << '\n';
+    std::cout << "Nickname: " << contact.getNickname() << '\n';
+    std::cout << "Phone number: " << contact.getPhoneNumber() << '\n';
+    std::cout << "Darkest secret: " << contact.getDarkestSecret() << '\n';
 }
 
 int main(void)
@@ -177,14 +190,14 @@ int main(void)
     std::cin.exceptions(std::istream::eofbit);
 
     try {
-        PhoneBook phonebook;
+        PhoneBook pb;
 
-        phonebook.addContact(Contact("Tupac", "Shakur", "2Pac", "none", "none"));
-        phonebook.addContact(Contact("Christopher", "Wallace", "Biggie", "none", "none"));
-        phonebook.addContact(Contact("Sean", "Combs", "Diddy", "none", "none"));
-        phonebook.addContact(Contact("Aubrey", "Graham", "Drake", "none", "none"));
-        phonebook.addContact(Contact("Kayne", "West", "Ye", "none", "none"));
-        phonebook.addContact(Contact("Shawn", "Carter", "JAY-Z", "none", "none"));
+        pb.addContact(Contact("Tupac", "Shakur", "2Pac", "none", "none"));
+        pb.addContact(Contact("Christopher", "Wallace", "Biggie", "none", "none"));
+        pb.addContact(Contact("Sean", "Combs", "Diddy", "none", "none"));
+        pb.addContact(Contact("Aubrey", "Graham", "Drake", "none", "none"));
+        pb.addContact(Contact("Kayne", "West", "Ye", "none", "none"));
+        pb.addContact(Contact("Shawn", "Carter", "JAY-Z", "none", "none"));
 
         while (true) {
             std::string command;
@@ -192,16 +205,16 @@ int main(void)
             readLine("Enter command (ADD, SELECT, EXIT): ", command);
 
             if (command == "ADD") {
-                saveContactInfo(phonebook);
+                saveContactInfo(pb);
             }
             else if (command == "SELECT") {
-                displayContactInfo(phonebook);
+                displayContactInfo(pb);
             }
             else if (command == "EXIT") {
                 break;
             }
             else {
-                std::cout << "Unknown command\n";
+                std::cout << "Unknown command '" << command << "'\n";
             }
         }
     }

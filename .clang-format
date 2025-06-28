@@ -5,6 +5,7 @@ IndentWidth: 4
 ColumnLimit: 100
 BreakBeforeBraces: Custom
 BraceWrapping:
+  AfterEnum: false
   AfterFunction: true
   BeforeCatch: true
   BeforeElse: true
@@ -15,3 +16,4 @@ AccessModifierOffset: -4
 AllowShortFunctionsOnASingleLine: InlineOnly
 BreakConstructorInitializers: BeforeColon
 PackConstructorInitializers: Never
+AllowShortEnumsOnASingleLine: false

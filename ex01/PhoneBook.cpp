@@ -1,23 +1,13 @@
 #include "PhoneBook.hpp"
 
 #include <cassert>
-#include <stdexcept>
 
-// Constructors
 PhoneBook::PhoneBook()
     : size(0),
       nextIndex(0)
 {
 }
 
-void PhoneBook::checkInvariants() const
-{
-    assert(kMaxContacts > 0);
-    assert(size >= 0 && size <= kMaxContacts);
-    assert(nextIndex >= 0 && nextIndex < kMaxContacts);
-}
-
-// Getters
 int PhoneBook::getSize() const
 {
     return size;
@@ -33,19 +23,28 @@ bool PhoneBook::isFull() const
     return (size == kMaxContacts);
 }
 
-const Contact* PhoneBook::getContactAt(int index) const
+bool PhoneBook::hasContactAt(int index) const
 {
-    if (size == 0 || (index < 0 || index >= size)) {
-        return (NULL);
-    }
-    return &contacts[index];
+    return (index >= 0 && index < size);
 }
 
-// Setters
+const Contact& PhoneBook::getContactAt(int index) const
+{
+    assert(!isEmpty());
+    assert(hasContactAt(index));
+    return contacts[index];
+}
+
+void PhoneBook::checkInvariants() const
+{
+    assert(kMaxContacts > 0);
+    assert(size >= 0 && size <= kMaxContacts);
+    assert(nextIndex >= 0 && nextIndex < kMaxContacts);
+}
+
 void PhoneBook::addContact(const Contact& contact)
 {
-    this->checkInvariants();
-
+    checkInvariants();
     contacts[nextIndex] = contact;
     nextIndex = (nextIndex + 1) % kMaxContacts;
     if (size < kMaxContacts) {

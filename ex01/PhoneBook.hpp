@@ -12,7 +12,8 @@ public:
     int getSize() const;
     bool isEmpty() const;
     bool isFull() const;
-    const Contact* getContactAt(int index) const;
+    bool hasContactAt(int index) const;
+    const Contact& getContactAt(int index) const;
 
 private:
     static const int kMaxContacts = 8;

@@ -101,7 +101,7 @@ static void drawRowBorder()
     std::string cellBorder(kColumnWidth, '-');
 
     for (int i = 0; i < kNumColumns; ++i) {
-        std::cout << '+' << cellBorder;
+        std::cout << "+" << cellBorder;
     }
     std::cout << "+\n";
 }
@@ -111,12 +111,12 @@ static void drawCellData(const std::string& str)
     std::string trimmed;
 
     if (str.length() > kColumnWidth) {
-        trimmed = str.substr(0, kColumnWidth - 1) + '.';
+        trimmed = str.substr(0, kColumnWidth - 1) + ".";
     }
     else {
         trimmed = str;
     }
-    std::cout << '|';
+    std::cout << "|";
     std::cout << std::right << std::setw(kColumnWidth) << trimmed;
 }
 
@@ -133,7 +133,7 @@ static void drawTableHeader()
 static void drawRowData(const Contact& contact, int index)
 {
     drawRowBorder();
-    std::cout << '|';
+    std::cout << "|";
     std::cout << std::right << std::setw(kColumnWidth) << index;
     drawCellData(contact.getFirstName());
     drawCellData(contact.getLastName());
@@ -164,7 +164,8 @@ static void displayContactInfo(const PhoneBook& pb)
     int index;
 
     while (true) {
-        readLine("Enter index to display: ", input);
+        readLine("\nEnter index to display: ", input);
+
         if (!tryParseInt(input, index)) {
             std::cout << "Invalid number. Try again.\n";
             continue;
@@ -178,16 +179,16 @@ static void displayContactInfo(const PhoneBook& pb)
 
     const Contact& contact = pb.getContactAt(index);
 
-    std::cout << "First name: " << contact.getFirstName() << '\n';
-    std::cout << "Last name: " << contact.getLastName() << '\n';
-    std::cout << "Nickname: " << contact.getNickname() << '\n';
-    std::cout << "Phone number: " << contact.getPhoneNumber() << '\n';
-    std::cout << "Darkest secret: " << contact.getDarkestSecret() << '\n';
+    std::cout << "First name: " << contact.getFirstName() << "\n";
+    std::cout << "Last name: " << contact.getLastName() << "\n";
+    std::cout << "Nickname: " << contact.getNickname() << "\n";
+    std::cout << "Phone number: " << contact.getPhoneNumber() << "\n";
+    std::cout << "Darkest secret: " << contact.getDarkestSecret() << "\n";
 }
 
 int main(void)
 {
-    std::cin.exceptions(std::istream::eofbit);
+    std::cin.exceptions(std::ios_base::eofbit);
 
     try {
         PhoneBook pb;
@@ -199,10 +200,10 @@ int main(void)
         pb.addContact(Contact("Kayne", "West", "Ye", "none", "none"));
         pb.addContact(Contact("Shawn", "Carter", "JAY-Z", "none", "none"));
 
-        while (true) {
-            std::string command;
+        std::string command;
 
-            readLine("Enter command (ADD, SELECT, EXIT): ", command);
+        while (true) {
+            readLine("\nEnter command (ADD, SELECT, EXIT): ", command);
 
             if (command == "ADD") {
                 saveContactInfo(pb);

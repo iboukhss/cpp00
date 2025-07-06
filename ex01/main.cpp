@@ -41,8 +41,7 @@ static void readLine(const std::string& prompt, std::string& str)
         std::cout << prompt;
         std::getline(std::cin, str);
         trimBoth(str);
-    }
-    while (str.empty());
+    } while (str.empty());
 }
 
 static void saveContactInfo(PhoneBook& pb)

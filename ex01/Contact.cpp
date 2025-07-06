@@ -21,7 +21,7 @@ Contact::Contact(const std::string& firstName, const std::string& lastName,
 {
 }
 
-// Getters
+// Public methods
 const std::string& Contact::getFirstName() const
 {
     return firstName;
@@ -47,7 +47,6 @@ const std::string& Contact::getDarkestSecret() const
     return darkestSecret;
 }
 
-// Setters
 void Contact::setFirstName(const std::string& firstName)
 {
     this->firstName = firstName;

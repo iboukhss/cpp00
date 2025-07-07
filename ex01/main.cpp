@@ -49,6 +49,8 @@ static void saveContactInfo(PhoneBook& pb)
     Contact contact;
     std::string input;
 
+    std::cout << "\n";
+
     readLine("First name: ", input);
     contact.setFirstName(input);
 
@@ -142,6 +144,8 @@ static void drawRowData(const Contact& contact, int index)
 
 static void displayContactList(const PhoneBook& pb)
 {
+    std::cout << "\n";
+
     drawTableHeader();
     for (int i = 0; i < pb.getSize(); ++i) {
         const Contact& contact = pb.getContactAt(i);
@@ -178,10 +182,11 @@ static void displayContactInfo(const PhoneBook& pb)
 
     const Contact& contact = pb.getContactAt(index);
 
-    std::cout << "First name: " << contact.getFirstName() << "\n";
-    std::cout << "Last name: " << contact.getLastName() << "\n";
-    std::cout << "Nickname: " << contact.getNickname() << "\n";
-    std::cout << "Phone number: " << contact.getPhoneNumber() << "\n";
+    std::cout << "\n";
+    std::cout << "First name:     " << contact.getFirstName() << "\n";
+    std::cout << "Last name:      " << contact.getLastName() << "\n";
+    std::cout << "Nickname:       " << contact.getNickname() << "\n";
+    std::cout << "Phone number:   " << contact.getPhoneNumber() << "\n";
     std::cout << "Darkest secret: " << contact.getDarkestSecret() << "\n";
 }
 
@@ -192,12 +197,12 @@ int main(void)
     try {
         PhoneBook pb;
 
-        pb.addContact(Contact("Tupac", "Shakur", "2Pac", "none", "none"));
+        /*pb.addContact(Contact("Tupac", "Shakur", "2Pac", "none", "none"));
         pb.addContact(Contact("Christopher", "Wallace", "Biggie", "none", "none"));
         pb.addContact(Contact("Sean", "Combs", "Diddy", "none", "none"));
         pb.addContact(Contact("Aubrey", "Graham", "Drake", "none", "none"));
         pb.addContact(Contact("Kayne", "West", "Ye", "none", "none"));
-        pb.addContact(Contact("Shawn", "Carter", "JAY-Z", "none", "none"));
+        pb.addContact(Contact("Shawn", "Carter", "JAY-Z", "none", "none"));*/
 
         std::string command;
 
